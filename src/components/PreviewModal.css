@@ -1,0 +1,42 @@
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex; align-items: center;
+  justify-content: center; z-index: 1000;
+}
+.preview-wrapper {
+  position: relative; display: inline-block;
+  overflow: visible;
+}
+.preview-container {
+  background: white; padding: 1rem;
+  border-radius: 8px;
+  max-width: 80vw; max-height: 80vh;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+.preview-media {
+  max-width: 100%; max-height: 100%; display: block;
+  margin: 0 auto;
+}
+.close-btn {
+  position: absolute; top: -5%; right: -5%;
+  background: rgba(255,255,255,0.9); border: none;
+  border-radius: 50%; width: 2rem; height: 2rem;
+  font-size: 1.25rem; line-height: 2rem;
+  text-align: center; cursor: pointer; z-index: 1;
+}
+.close-btn:hover { background: rgba(255,255,255,1); }
+.fetch-id-section { margin-top: 1rem; text-align: center; }
+.fetch-btn {
+  padding: 0.5rem 1rem;
+  background: #007bff; color: white;
+  border: none; border-radius: 4px; cursor: pointer;
+}
+.fetch-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.id-text {
+  margin-top: 0.5rem; font-weight: bold; color: green;
+}
+.error-text {
+  margin-top: 0.5rem; font-weight: bold; color: red;
+}

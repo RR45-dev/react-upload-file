@@ -1,0 +1,53 @@
+.file-list-container {
+  padding: 0 10%;
+  display: flex; flex-direction: column; height: 100%; overflow: auto; min-height: 82vh; 
+}
+
+.file-table {
+  width: 100%; table-layout: fixed; border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.file-table th:first-child, .file-table td:first-child {
+  width: 65%; word-wrap: break-word;
+}
+.file-table th:last-child, .file-table td:last-child {
+  width: 35%;
+}
+
+.file-table th, .file-table td {
+  padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #ddd;
+}
+.file-table th { background: #f5f5f5; font-weight: 600; }
+
+.action-buttons {
+  display: flex; gap: 0.5rem; align-items: center;
+}
+
+.btn {
+  padding: 0.3rem 0.8rem; font-size: 0.9rem; border: none;
+  border-radius: 4px; cursor: pointer; color: #fff;
+  transition: background 0.2s; text-decoration: none; margin: 0;
+}
+
+.download-btn { background: #007bff; }
+.download-btn:hover { background: #0056b3; }
+
+.preview-btn { background: #28a745; }
+.preview-btn:hover { background: #1e7e34; }
+
+.pagination {
+  margin-top: auto; padding: 1rem 0;
+  display: flex; justify-content: center; gap: 0.5rem;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem; border: 1px solid #ccc;
+  background: transparent; cursor: pointer; border-radius: 4px;
+  transition: background 0.2s;
+}
+.pagination button:hover:not(:disabled) { background: #eee; }
+.pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+.pagination button.active {
+  background: #007bff; color: #fff; border-color: #007bff;
+}
