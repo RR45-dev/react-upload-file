@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UploadForm   from './components/UploadForm';
-import FileList     from './components/FileList';         // ← fixed typo here
+import FileList     from './components/FlieList';         // ← fixed typo here
 import PreviewModal from './components/PreviewModal';
 import { listFiles } from './services/api';
 import './App.css';
