@@ -21,8 +21,9 @@ export const parseImage = (file, onUploadProgress) => {
   const fd = new FormData();
   fd.append('image', file);
   return axios.post(
-    `${API_BASE}/api/idcard/parse`,
+    `${API_BASE}/api/idcard/parse`,  // ← this is your Azure URL
     fd,
     { onUploadProgress }
   );
 };
+
