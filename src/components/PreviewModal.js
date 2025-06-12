@@ -1,6 +1,6 @@
 // src/components/PreviewModal.js
 import React, { useState, useEffect } from 'react';
-import { parseImage } from '../services/api';
+import { parseImage } from '../services/api.js';
 import './PreviewModal.css';
 
 export default function PreviewModal({ url, onClose }) {
@@ -8,7 +8,7 @@ export default function PreviewModal({ url, onClose }) {
   const [loading, setLoading]           = useState(false);
   const [error, setError]               = useState('');
 
-  // Reset state whenever a new URL is opened
+  // Reset state each time a new URL is shown
   useEffect(() => {
     setSubscriberId(null);
     setError('');
@@ -17,11 +17,11 @@ export default function PreviewModal({ url, onClose }) {
 
   if (!url) return null;
 
-  // Determine how to render the preview
+  // Choose the correct preview element based on extension
   const ext = url.split('.').pop().toLowerCase();
   let media;
   if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-    media = <img src={url} className="preview-media" alt="preview" />;
+    media = <img src={url} alt="preview" className="preview-media" />;
   } else if (['tiff', 'tif'].includes(ext)) {
     media = (
       <object data={url} type="image/tiff" className="preview-media">
@@ -29,23 +29,24 @@ export default function PreviewModal({ url, onClose }) {
       </object>
     );
   } else {
-    media = <img src={url} className="preview-media" alt="preview" />;
+    media = <img src={url} alt="preview" className="preview-media" />;
   }
 
-  // When user clicks “Fetch ID”, download the blob and hand it off to parseImage()
+  // When clicked, fetch the blob and send it to the API
   const fetchId = async () => {
     setLoading(true);
     setError('');
     setSubscriberId(null);
 
     try {
-      // Download the blob
+      // Download the blob from the static site
       const resp = await fetch(url);
       const blob = await resp.blob();
-      // Wrap it in a File so parseImage can send it as form-data
+
+      // Wrap it in a File object so parseImage can send it
       const file = new File([blob], `preview.${ext}`, { type: blob.type });
 
-      // Use axios helper which points at the correct API_BASE
+      // Use your axios helper to POST to Azure
       const result = await parseImage(file);
       setSubscriberId(result.data.subscriberId);
     } catch (err) {
