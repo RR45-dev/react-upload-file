@@ -3,6 +3,7 @@ import axios from 'axios';
 // Use the public App Service hostname (no .canadaeast-01 or /scm)
 const API_BASE = 'https://file-upload-app-cedtcedbfqfxgkg0.canadaeast-01.azurewebsites.net';
 
+
 export const uploadFile = (file, onUploadProgress) => {
   const fd = new FormData();
   fd.append('file', file);

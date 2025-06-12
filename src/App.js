@@ -3,6 +3,7 @@ import UploadForm   from './components/UploadForm';
 import FileList     from './components/FlieList';
 import PreviewModal from './components/PreviewModal';
 import { listFiles } from './services/api';
+import { parseImage } from '../services/api';
 import './App.css';
 
 function App() {
