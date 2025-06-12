@@ -13,16 +13,16 @@ const WARMUP_URL =
 
 function App() {
   // State to track API warm-up completion
-  const [isReady, setIsReady]               = useState(false);
-  const [tab, setTab]                       = useState('landing');   // 'landing' | 'upload' | 'viewall'
-  const [files, setFiles]                   = useState([]);
-  const [page, setPage]                     = useState(1);
-  const [totalPages, setTotalPages]         = useState(1);
-  const [previewData, setPreviewData]       = useState(null);
+  const [isReady, setIsReady]         = useState(false);
+  const [tab, setTab]                 = useState('landing');   // 'landing' | 'upload' | 'viewall'
+  const [files, setFiles]             = useState([]);
+  const [page, setPage]               = useState(1);
+  const [totalPages, setTotalPages]   = useState(1);
+  const [previewData, setPreviewData] = useState(null);
 
   const pageSize = 10;
 
-  // Warm-up effect: ping the endpoint 5× before showing UI
+  // 1) Warm-up effect: ping the endpoint 5× before showing UI
   useEffect(() => {
     async function warmUpApi(calls = 5) {
       for (let i = 0; i < calls; i++) {
@@ -35,26 +35,24 @@ function App() {
       }
       setIsReady(true);
     }
-
     warmUpApi();
   }, []);
 
-  // Don’t render the app until warm-up is done
+  // 2) Fetch files when viewing the 'viewall' tab
+  useEffect(() => {
+    if (tab !== 'viewall') return;
+    listFiles(page, pageSize)
+      .then(res => {
+        setFiles(res.data.items);
+        setTotalPages(Math.ceil(res.data.totalCount / res.data.pageSize));
+      })
+      .catch(err => console.error('Error fetching files:', err));
+  }, [tab, page]);
+
+  // Don’t render the UI until warm-up is done
   if (!isReady) {
     return <div className="loading">Warming up, please wait…</div>;
   }
-
-  // Fetch files for 'viewall' tab
-  useEffect(() => {
-    if (tab === 'viewall') {
-      listFiles(page, pageSize)
-        .then(res => {
-          setFiles(res.data.items);
-          setTotalPages(Math.ceil(res.data.totalCount / res.data.pageSize));
-        })
-        .catch(err => console.error('Error fetching files:', err));
-    }
-  }, [tab, page]);
 
   return (
     <div className="wrapper">
