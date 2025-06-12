@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import UploadForm   from './components/UploadForm';
 import FileList     from './components/FlieList';
@@ -6,15 +7,44 @@ import { listFiles } from './services/api';
 
 import './App.css';
 
+// Full URL with query params for warming up the API
+const WARMUP_URL =
+  'https://file-upload-app-cedtcedbfqfxgkg0.canadaeast-01.azurewebsites.net/api/files/viewall?page=1&pageSize=10';
+
 function App() {
-  const [tab, setTab]               = useState('landing');   // 'landing' | 'upload' | 'viewall'
-  const [files, setFiles]           = useState([]);
-  const [page, setPage]             = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [previewData, setPreviewData] = useState(null);
+  // State to track API warm-up completion
+  const [isReady, setIsReady]               = useState(false);
+  const [tab, setTab]                       = useState('landing');   // 'landing' | 'upload' | 'viewall'
+  const [files, setFiles]                   = useState([]);
+  const [page, setPage]                     = useState(1);
+  const [totalPages, setTotalPages]         = useState(1);
+  const [previewData, setPreviewData]       = useState(null);
 
   const pageSize = 10;
 
+  // Warm-up effect: ping the endpoint 5× before showing UI
+  useEffect(() => {
+    async function warmUpApi(calls = 5) {
+      for (let i = 0; i < calls; i++) {
+        try {
+          await fetch(WARMUP_URL, { method: 'GET', mode: 'cors' });
+          console.log(`Warm-up #${i + 1} succeeded`);
+        } catch (err) {
+          console.warn(`Warm-up #${i + 1} failed:`, err);
+        }
+      }
+      setIsReady(true);
+    }
+
+    warmUpApi();
+  }, []);
+
+  // Don’t render the app until warm-up is done
+  if (!isReady) {
+    return <div className="loading">Warming up, please wait…</div>;
+  }
+
+  // Fetch files for 'viewall' tab
   useEffect(() => {
     if (tab === 'viewall') {
       listFiles(page, pageSize)
