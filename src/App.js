@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import UploadForm   from './components/UploadForm';
-import FileList     from './components/FlieList';         // ← fixed typo here
+import FileList     from './components/FlieList';
 import PreviewModal from './components/PreviewModal';
 import { listFiles } from './services/api';
 import './App.css';
 
 function App() {
-  const [tab, setTab]               = useState('landing');
+  const [tab, setTab]               = useState('landing');   // 'landing' | 'upload' | 'viewall'
   const [files, setFiles]           = useState([]);
   const [page, setPage]             = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [previewData, setPreviewData] = useState(null);
+
   const pageSize = 10;
 
   useEffect(() => {
     if (tab === 'viewall') {
       listFiles(page, pageSize)
         .then(res => {
-          // our API returns { items: [...], totalCount, pageSize, page }
-          setFiles(res.data.items || []);
-          setTotalPages(
-            Math.ceil((res.data.totalCount || 0) / (res.data.pageSize || pageSize))
-          );
+          setFiles(res.data.items);
+          setTotalPages(Math.ceil(res.data.totalCount / res.data.pageSize));
         })
         .catch(err => console.error('Error fetching files:', err));
     }
