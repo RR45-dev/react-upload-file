@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UploadForm   from './components/UploadForm';
 import FileList     from './components/FlieList';
 import PreviewModal from './components/PreviewModal';
-import listFiles  from './services/api';
+import { listFiles } from './services/api';
 
 import './App.css';
 
