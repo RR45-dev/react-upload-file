@@ -1,33 +1,53 @@
 .file-list-container {
   padding: 0 10%;
-  display: flex; flex-direction: column; height: 100%; overflow: auto; min-height: 82vh; 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  min-height: 82vh;
 }
 
 .file-table {
-  width: 100%; table-layout: fixed; border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
   margin-top: 1rem;
 }
 
 .file-table th:first-child, .file-table td:first-child {
-  width: 65%; word-wrap: break-word;
+  width: 65%;
+  word-wrap: break-word;
 }
 .file-table th:last-child, .file-table td:last-child {
   width: 35%;
 }
 
 .file-table th, .file-table td {
-  padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #ddd;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-.file-table th { background: #f5f5f5; font-weight: 600; }
+.file-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
 
 .action-buttons {
-  display: flex; gap: 0.5rem; align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .btn {
-  padding: 0.3rem 0.8rem; font-size: 0.9rem; border: none;
-  border-radius: 4px; cursor: pointer; color: #fff;
-  transition: background 0.2s; text-decoration: none; margin: 0;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s;
+  text-decoration: none;
+  margin: 0;
 }
 
 .download-btn { background: #007bff; }
@@ -37,17 +57,72 @@
 .preview-btn:hover { background: #1e7e34; }
 
 .pagination {
-  margin-top: auto; padding: 1rem 0;
-  display: flex; justify-content: center; gap: 0.5rem;
+  margin-top: auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .pagination button {
-  padding: 0.4rem 0.8rem; border: 1px solid #ccc;
-  background: transparent; cursor: pointer; border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
   transition: background 0.2s;
 }
 .pagination button:hover:not(:disabled) { background: #eee; }
 .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
 .pagination button.active {
-  background: #007bff; color: #fff; border-color: #007bff;
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Mobile overrides */
+.file-list-container.mobile {
+  padding: 0 5%;
+  min-height: auto;
+}
+
+.file-list-container.mobile .file-table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+.file-list-container.mobile .file-table thead {
+  display: none;
+}
+.file-list-container.mobile .file-table tr {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.file-list-container.mobile .file-table td {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+.file-list-container.mobile .file-table td:first-child {
+  flex: 1 1 60%;
+}
+.file-list-container.mobile .file-table td:last-child {
+  flex: 1 1 40%;
+  text-align: right;
+}
+
+.file-list-container.mobile .action-buttons {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.file-list-container.mobile .btn {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+.file-list-container.mobile .pagination {
+  margin-top: 1rem;
 }

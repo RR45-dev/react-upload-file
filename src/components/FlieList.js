@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './FileList.css';
 
 export default function FileList({
@@ -8,10 +8,23 @@ export default function FileList({
   onPageChange,
   onPreview
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();                                  // initial check
+    window.addEventListener('resize', checkMobile); // update on resize
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const containerClass = isMobile
+    ? 'file-list-container mobile'
+    : 'file-list-container';
+
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="file-list-container">
+    <div className={containerClass}>
       <table className="file-table">
         <thead>
           <tr>
